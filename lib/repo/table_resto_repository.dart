@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:latihan_bloc_ti4malama/core/api_client.dart';
-import 'package:latihan_bloc_ti4malama/models/param/tabel_resto_param.dart';
 import 'package:latihan_bloc_ti4malama/models/table_resto_model.dart';
+import 'package:latihan_bloc_ti4malama/param/tabel_resto_param.dart';
 import 'package:latihan_bloc_ti4malama/response/tabel_resto_create_respon.dart';
 
 class TableRestoRepository extends ApiClient {
@@ -24,8 +24,22 @@ class TableRestoRepository extends ApiClient {
     TableRestoParam tableRestoParam,
   ) async {
     try {
-      var response = await dio.post("path", data: tableRestoParam.toJson());
+      var response =
+          await dio.post('table_resto', data: tableRestoParam.toJson());
       debugPrint('TabelResto POST: ${response.data}');
+      return TabelRestoCreateResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<TabelRestoCreateResponse> upadteTableResto(
+    TableRestoParam tableRestoParam,
+  ) async {
+    try {
+      var response = await dio.patch('table_resto/${tableRestoParam.id}',
+          data: tableRestoParam.toJsonUpdate());
+      debugPrint('Table Resto UPDATE : ${response.data}');
       return TabelRestoCreateResponse.fromJson(response.data);
     } on DioException catch (e) {
       throw Exception(e);
