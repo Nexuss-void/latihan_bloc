@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latihan_bloc_ti4malama/bloc/table_resto/get_table_resto_bloc.dart';
+import 'package:latihan_bloc_ti4malama/ui/login_form_page.dart';
 import 'package:latihan_bloc_ti4malama/ui/table_resto_page.dart';
 
 void main() {
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      // home: LoginFormPage(),
       home: BlocProvider(
         create: (context) => GetTableRestoBloc()..add(TableRestoFetched()),
         child: TableRestoPage(),

@@ -34,11 +34,15 @@ class TableRestoPage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => AddTableRestoPage(
-                                    tableRestoModel: tableRestoModel)));
+                                builder: (_) => BlocProvider(
+                                      create: (context) => AddTableRestoBloc(),
+                                      child: AddTableRestoPage(
+                                          tableRestoModel: tableRestoModel),
+                                    )));
                       },
                       title: Text(tableRestoModel.name.toString()),
-                      // subtitle: ,
+                      subtitle:
+                          Text('${tableRestoModel.capacity.toString()} orang'),
                     );
                   }),
             // TODO: Handle this case.

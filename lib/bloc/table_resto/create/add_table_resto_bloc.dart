@@ -39,6 +39,7 @@ class AddTableRestoBloc extends Bloc<AddTableRestoEvent, AddTableRestoState> {
   Future<void> _onUpdateTableRestoPressed(
       UpdateTableRestoPressed event, Emitter<AddTableRestoState> emit) async {
     final params = TableRestoParam(
+        id: event.tableRestoParam.id,
         code: event.tableRestoParam.code,
         name: event.tableRestoParam.name,
         capacity: event.tableRestoParam.capacity,
@@ -48,7 +49,7 @@ class AddTableRestoBloc extends Bloc<AddTableRestoEvent, AddTableRestoState> {
     emit(AddTableRestoLoading());
     try {
       TabelRestoCreateResponse response =
-          await tableRestoRepository.upadteTableResto(params);
+          await tableRestoRepository.updateTableResto(params);
       emit(AddTableRestoSuccess(tabelRestoCreateResponse: response));
     } catch (e) {
       emit(AddTableRestoError(message: e.toString()));

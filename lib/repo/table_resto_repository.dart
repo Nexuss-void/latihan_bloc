@@ -8,9 +8,9 @@ import 'package:latihan_bloc_ti4malama/response/tabel_resto_create_respon.dart';
 class TableRestoRepository extends ApiClient {
   Future<List<TableRestoModel>> getTableRestos() async {
     try {
-      var response = await dio.get('table_resto_list');
+      var response = await dio.get('table_resto');
       debugPrint('Table Resto GET ALL:${response.data}');
-      debugPrint(response.data.runtimeType.toString());
+      // debugPrint(response.data.runtimeType.toString());
       List list = response.data;
       List<TableRestoModel> listTableResto =
           list.map((element) => TableRestoModel.fromJson(element)).toList();
@@ -33,11 +33,11 @@ class TableRestoRepository extends ApiClient {
     }
   }
 
-  Future<TabelRestoCreateResponse> upadteTableResto(
+  Future<TabelRestoCreateResponse> updateTableResto(
     TableRestoParam tableRestoParam,
   ) async {
     try {
-      var response = await dio.patch('table_resto/${tableRestoParam.id}',
+      var response = await dio.put('table_resto/${tableRestoParam.id}',
           data: tableRestoParam.toJsonUpdate());
       debugPrint('Table Resto UPDATE : ${response.data}');
       return TabelRestoCreateResponse.fromJson(response.data);

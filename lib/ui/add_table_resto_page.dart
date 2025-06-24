@@ -23,6 +23,10 @@ class _AddTableRestoPageState extends State<AddTableRestoPage> {
 // globalkey
   final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
 
+  String? selectTableStatus;
+
+  String? selectStatus;
+
   @override
   void initState() {
     if (widget.tableRestoModel != null) {
@@ -30,6 +34,8 @@ class _AddTableRestoPageState extends State<AddTableRestoPage> {
       tecCode.text = widget.tableRestoModel!.code!;
       tecName.text = widget.tableRestoModel!.name!;
       tecCapacity.text = widget.tableRestoModel!.capacity!.toString();
+      selectTableStatus = widget.tableRestoModel?.table_status!;
+      selectStatus = widget.tableRestoModel?.status!;
     } else {
       emptyForm();
     }
@@ -38,10 +44,9 @@ class _AddTableRestoPageState extends State<AddTableRestoPage> {
 
   @override
   void emptyForm() {
-    tecCode.dispose();
-    tecName.dispose();
-    tecCapacity.dispose();
-    super.dispose();
+    tecCode.clear();
+    tecName.clear();
+    tecCapacity.clear();
   }
 
   @override
@@ -108,6 +113,40 @@ class _AddTableRestoPageState extends State<AddTableRestoPage> {
                   return null;
                 },
               ),
+              SizedBox(height: 16),
+              if (widget.tableRestoModel != null) ...[
+                DropdownButtonFormField<String>(
+                  value: selectTableStatus,
+                  decoration: InputDecoration(
+                    labelText: 'Status Meja',
+                    border: OutlineInputBorder(),
+                  ),
+                  items: ['Terisi', 'Kosong'].map((value) {
+                    return DropdownMenuItem(value: value, child: Text(value));
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectTableStatus = value;
+                    });
+                  },
+                ),
+                SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  value: selectStatus,
+                  decoration: InputDecoration(
+                    labelText: 'Status',
+                    border: OutlineInputBorder(),
+                  ),
+                  items: ['Aktif', 'Tidak Aktif'].map((value) {
+                    return DropdownMenuItem(value: value, child: Text(value));
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectStatus = value;
+                    });
+                  },
+                ),
+              ],
               SizedBox(height: 24),
 
               // Tombol Simpan
@@ -136,13 +175,32 @@ class _AddTableRestoPageState extends State<AddTableRestoPage> {
                       child: ElevatedButton(
                         onPressed: () {
                           if (globalKey.currentState!.validate()) {
-                            TableRestoParam params = TableRestoParam(
-                              code: tecCode.text,
-                              name: tecName.text,
-                              capacity: int.parse(tecCapacity.text),
-                            );
-                            context.read<AddTableRestoBloc>().add(
-                                AddTableRestoPressed(tableRestoParam: params));
+                            if (widget.tableRestoModel == null) {
+                              TableRestoParam params = TableRestoParam(
+                                code: tecCode.text,
+                                name: tecName.text,
+                                capacity: int.parse(tecCapacity.text),
+                              );
+                              context.read<AddTableRestoBloc>().add(
+                                  AddTableRestoPressed(
+                                      tableRestoParam: params));
+                            } else {
+                              TableRestoParam params = TableRestoParam(
+                                id: widget.tableRestoModel!.id,
+                                code: tecCode.text,
+                                name: tecName.text,
+                                capacity: int.parse(tecCapacity.text),
+                                table_status: selectTableStatus.toString(),
+                                status: selectStatus.toString(),
+                              );
+                              context.read<AddTableRestoBloc>().add(
+                                  UpdateTableRestoPressed(
+                                      id: widget.tableRestoModel!.id!,
+                                      tableRestoParam: params));
+                            }
+
+                            print(
+                                "ID yang dikirim: ${widget.tableRestoModel?.id}");
                           }
                         },
                         style: ElevatedButton.styleFrom(

@@ -12,5 +12,5 @@ final class AddTableRestoPressed extends AddTableRestoEvent {
 final class UpdateTableRestoPressed extends AddTableRestoEvent {
   final TableRestoParam tableRestoParam;
 
-  UpdateTableRestoPressed({required this.tableRestoParam});
+  UpdateTableRestoPressed({required this.tableRestoParam, required int id});
 }

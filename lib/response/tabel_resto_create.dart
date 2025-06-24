@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class TableRestoCreate {
   final int? id;
   final String? code;
