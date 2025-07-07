@@ -5,7 +5,7 @@ abstract class ApiClient {
 
   ApiClient() {
     _dio.options.headers['content-type'] = 'application/json';
-    _dio.options.baseUrl = 'http://10.180.3.129:8000/api/';
+    // _dio.options.baseUrl = 'http://10.18.1.172:8000/api/';
     // _dio.options.baseUrl = 'http://10.0.2.2:8000/api/';
   }
 

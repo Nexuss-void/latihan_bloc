@@ -34,11 +34,12 @@ class TableRestoPage extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => BlocProvider(
-                                      create: (context) => AddTableRestoBloc(),
-                                      child: AddTableRestoPage(
-                                          tableRestoModel: tableRestoModel),
-                                    )));
+                                builder: (_) => AddTableRestoPage(
+                                    tableRestoModel: tableRestoModel))).then(
+                          (value) => context.read<GetTableRestoBloc>().add(
+                                TableRestoFetched(),
+                              ),
+                        );
                       },
                       title: Text(tableRestoModel.name.toString()),
                       subtitle:

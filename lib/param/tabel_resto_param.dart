@@ -20,7 +20,6 @@ class TableRestoParam {
 
   Map<String, dynamic> toJsonUpdate() {
     return {
-      'id': id,
       'code': code,
       'name': name,
       'capacity': capacity,

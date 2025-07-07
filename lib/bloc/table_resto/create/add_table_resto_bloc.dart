@@ -50,7 +50,7 @@ class AddTableRestoBloc extends Bloc<AddTableRestoEvent, AddTableRestoState> {
     try {
       TabelRestoCreateResponse response =
           await tableRestoRepository.updateTableResto(params);
-      emit(AddTableRestoSuccess(tabelRestoCreateResponse: response));
+      emit(UpdateTableRestoSuccess(tabelRestoCreateResponse: response));
     } catch (e) {
       emit(AddTableRestoError(message: e.toString()));
     }
